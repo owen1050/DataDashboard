@@ -11,6 +11,12 @@ class RandDataGen():
     average_time = {}
     line_balancing_efficiency = {}
 
+
+    def updateSeed(self):
+        randSeed = int(time.time()*1000)
+        print(randSeed)
+        random.seed(randSeed)
+
     def segmentedInput(self, segments):
         segments = self.serialString.split('x')
         lineID = segments[0]
@@ -34,7 +40,7 @@ class RandDataGen():
         if in_out not in tree[line_id][station_id]:
             tree[line_id][station_id][in_out] = []
         
-        tree[line_id][station_id][in_out].append(timeNow)
+        tree[line_id][station_id][in_out].append(timeNow*10000)
 
     def sort_nested_dict(self, d):
         # Recursively sort the dictionary by keys
@@ -94,10 +100,19 @@ class RandDataGen():
         return line_efficiency_tree
 
     def genRandData(self, loopDur_ = 1000):
+        self.updateSeed()
+        self.i = 0 
+        self.timeStamps = {}
+        self.serialString = ""
+        self.sorted_timeStamps = {}
+        self.average_time = {}
+        self.line_balancing_efficiency = {}
+        numLines = 8
+        numStations = 8
         loopDur = loopDur_
         for i in range (loopDur):
-            randomLine = str(random.randint(1,5))
-            randomStation = str(random.randint(1,5))
+            randomLine = str(random.randint(1,numLines))
+            randomStation = str(random.randint(1,numStations))
             self.serialString = randomLine+"x"+randomStation+"x0x0"
             lineID, stationID, inNOut, haltNSave = self.segmentedInput(self.serialString)
             self.addTimeStamp(self.timeStamps, lineID, stationID, inNOut)

@@ -12,14 +12,12 @@ table {
 }
 
 td, th {
+  font-family: arial, sans-serif;
   border: 1px solid #444444;
   text-align: center;
-  padding: 8px;
+  padding: 3px;
 }
 
 tr:nth-child(even) {
   background-color: #dddddd;
-}
-th1{
-  text-align: right;
 }
