@@ -14,7 +14,7 @@ class RandDataGen():
 
     def updateSeed(self):
         randSeed = int(time.time()*1000)
-        print(randSeed)
+        #print(randSeed)
         random.seed(randSeed)
 
     def segmentedInput(self, segments):
@@ -24,10 +24,6 @@ class RandDataGen():
         inNOut = segments[2]
         haltNSave = segments[3]
         return lineID, stationID, inNOut,haltNSave
-        print("Line ID:", lineID)
-        print("Station ID:", stationID)
-        print("In/Out:", inNOut)
-        print("Halt/Save:", haltNSave)
 
     def addTimeStamp(self, tree, line_id, station_id, in_out):
 
@@ -121,5 +117,5 @@ class RandDataGen():
         self.sorted_timeStamps = self.sort_nested_dict(self.timeStamps) # sorted_timestamp
         self.average_time = self.calculate_average_time(self.sorted_timeStamps)
         self.line_balancing_efficiency = self.calculate_line_balancing_efficiency(self.average_time)
-        print("Average Time Tree:", self.average_time)
-        print("Line Balancing Efficiency Tree:", self.line_balancing_efficiency)
+        #print("Average Time Tree:", self.average_time)
+        #print("Line Balancing Efficiency Tree:", self.line_balancing_efficiency)

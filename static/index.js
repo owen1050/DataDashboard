@@ -1,13 +1,15 @@
-var dataTable = document.getElementById("dataTable")
+var oldDataTable = document.getElementById("dataTable")
 var avgTimes = getAverageTimes()
 var efficiencys = getEfficiency()
 
 onPageLoad()
+setInterval(onPageLoad, 1000);
 
 function onPageLoad(){
+    var dataTable = document.createElement('table');
     refreshRandomData()
-    //fix so it checks ids 1-100
     maxS = 2;
+    dataTable.insertRow(0)
     for(let l = 1;l <= 100;l++){
         let thisLineEff = efficiencys[l]
         let thisLineTimes = avgTimes[l]
@@ -16,7 +18,6 @@ function onPageLoad(){
             newRow = dataTable.insertRow(dataTable.rows.length);
             newRow.insertCell(0).innerHTML = l
             newRow.insertCell(1).innerHTML = thisLineEff.toFixed(2)
-            console.log(l)
         
             //loop through stations
             //populate row in this section
@@ -27,7 +28,6 @@ function onPageLoad(){
                     break;
                 }
                 newRow.insertCell(s+1).innerHTML = thisStationTime[0].toFixed(2)
-                console.log(thisStationTime[0])
                 if(s + 2 > maxS){
                     maxS = s + 2
                 }
@@ -50,7 +50,8 @@ function onPageLoad(){
         }
     }
 
-    console.log("page load complete")
+    oldDataTable.parentNode.replaceChild(dataTable, oldDataTable)
+    oldDataTable = dataTable
 }
 
 function getAverageTimes(){
@@ -58,7 +59,7 @@ function getAverageTimes(){
     xhr.open("GET", url_g + "/api/getAverageTimes", false);
     xhr.send();
     const data = xhr.response;
-    console.log(data);
+    //console.log(data);
     ret = JSON.parse(data);
     return ret
 }
@@ -68,7 +69,7 @@ function getEfficiency(){
     xhr.open("GET", url_g + "/api/getEfficiency", false);
     xhr.send();
     const data = xhr.response;
-    console.log(data);
+    //console.log(data);
     ret = JSON.parse(data);
     return ret
 }
