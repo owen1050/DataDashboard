@@ -95,7 +95,7 @@ class RandDataGen():
         
         return line_efficiency_tree
 
-    def genRandData(self, loopDur_ = 1000):
+    def genRandData(self, loopDur_ = 10000):
         self.updateSeed()
         self.i = 0 
         self.timeStamps = {}
@@ -103,8 +103,8 @@ class RandDataGen():
         self.sorted_timeStamps = {}
         self.average_time = {}
         self.line_balancing_efficiency = {}
-        numLines = 8
-        numStations = 8
+        numLines = 50
+        numStations = 16
         loopDur = loopDur_
         for i in range (loopDur):
             randomLine = str(random.randint(1,numLines))
@@ -117,5 +117,5 @@ class RandDataGen():
         self.sorted_timeStamps = self.sort_nested_dict(self.timeStamps) # sorted_timestamp
         self.average_time = self.calculate_average_time(self.sorted_timeStamps)
         self.line_balancing_efficiency = self.calculate_line_balancing_efficiency(self.average_time)
-        #print("Average Time Tree:", self.average_time)
-        #print("Line Balancing Efficiency Tree:", self.line_balancing_efficiency)
+        print("Average Time Tree:", self.average_time)
+        print("Line Balancing Efficiency Tree:", self.line_balancing_efficiency)

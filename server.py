@@ -32,5 +32,5 @@ def regenData():
 	return str(1)
 
 if __name__ == '__main__':
-	randData.genRandData(500)
+	randData.genRandData(10000)
 	app.run(host="0.0.0.0", port=5000)

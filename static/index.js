@@ -3,7 +3,7 @@ var avgTimes = getAverageTimes()
 var efficiencys = getEfficiency()
 
 onPageLoad()
-setInterval(onPageLoad, 1000);
+setInterval(onPageLoad, 10000);
 
 function onPageLoad(){
     var dataTable = document.createElement('table');
@@ -27,7 +27,11 @@ function onPageLoad(){
                 if(thisStationTime == undefined){
                     break;
                 }
-                newRow.insertCell(s+1).innerHTML = thisStationTime[0].toFixed(2)
+                try{
+                    newRow.insertCell(s+1).innerHTML = thisStationTime[0].toFixed(2)
+                } catch(err){
+                    newRow.cells[s+1].innerHTML = 0
+                }
                 if(s + 2 > maxS){
                     maxS = s + 2
                 }
