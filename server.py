@@ -26,6 +26,10 @@ def getAverageTimes():
 def getEfficiency():
 	return (json.dumps(randData.line_balancing_efficiency))
 
+@app.route('/api/getPartCounts')
+def getPartCounts():
+	return (json.dumps(randData.partCounts))
+
 @app.route('/api/regenData')
 def regenData():
 	randData.genRandData()

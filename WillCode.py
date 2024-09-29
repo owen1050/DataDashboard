@@ -10,7 +10,7 @@ class RandDataGen():
     sorted_timeStamps = {}
     average_time = {}
     line_balancing_efficiency = {}
-
+    partCounts = {}
 
     def updateSeed(self):
         randSeed = int(time.time()*1000)
@@ -103,10 +103,11 @@ class RandDataGen():
         self.sorted_timeStamps = {}
         self.average_time = {}
         self.line_balancing_efficiency = {}
-        numLines = 50
-        numStations = 16
+        numLines = 21
+        numStations = 10
         loopDur = loopDur_
-        for i in range (loopDur):
+        for i in range (loopDur):  
+            self.partCounts[i] = random.randint(0,2048)
             randomLine = str(random.randint(1,numLines))
             randomStation = str(random.randint(1,numStations))
             self.serialString = randomLine+"x"+randomStation+"x0x0"
