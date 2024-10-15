@@ -1,10 +1,12 @@
 import time
 import serial
 from collections import OrderedDict
+from databaseQuerys import databaseQuerys
 
 ser = serial.Serial('COM5', 115200)  # COM 4 is right USB C port
 
 timeStamps = {}
+db = databaseQuerys()
 
 def segmentedInput(serialString):
     segments = serialString.split('x')
@@ -21,6 +23,8 @@ def segmentedInput(serialString):
     return lineID, stationID, inNOut, haltNSave
 
 def addTimeStamp(tree, line_id, station_id, in_out):
+
+    db.addTimestampEvent(line_id,station_id,in_out)#writes to DB
     timeNow = time.time()
 
     if line_id not in tree:
