@@ -1,0 +1,7 @@
+-dbQueries
+	- insert timestamp
+	- edit line name
+	- edit station name
+	- update average station time since last TSID
+	- update line effeciency since last TSID
+	- given start time, end time, time spacing, generate average station times and average line effeciencies
