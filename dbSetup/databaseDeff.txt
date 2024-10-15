@@ -1,41 +1,48 @@
-Table timestamps {
-  lineID integer
-  stationID integer
-  state integer
-  timeOfEvent timestamp 
-}
+  Table timestamps {
+    timestampID integer
+    lineID integer
+    stationID integer
+    state integer
+    timeOfEvent timestamp 
+  }
 
-Table averageStationTimes {
-  lineID integer
-  stationID integer
-  averageTimeSec real
-  updatedAt timestamp
-  updateCount integer
-}
+  Table averageStationTimes {
+    lineID integer
+    stationID integer
+    averageTimeSec real
+    startTSID integer
+    endTSID integer
+  }
 
-Table lineEffeciencies {
-  lineID integer
-  lineEffeciency real
-  updatedAt timestamp 
-}
+  Table lineEffeciencies {
+    lineID integer
+    lineEffeciency real
+    startTSID integer
+    endTSID integer
+  }
 
-Table lineNames {
-  lineID integer
-  lineName text
-}
+  Table lineNames {
+    lineID integer
+    lineName text
+  }
 
-Table stationNames {
-  stationID integer
-  stationName text
-}
+  Table stationNames {
+    stationID integer
+    stationName text
+  }
 
 
-Ref: lineNames.lineID < timestamps.lineID
-Ref: stationNames.stationID < timestamps.stationID
+  Ref: lineNames.lineID < timestamps.lineID
+  Ref: stationNames.stationID < timestamps.stationID
 
-Ref: lineEffeciencies.lineID < timestamps.lineID
-Ref: averageStationTimes.lineID < timestamps.lineID
+  Ref: lineEffeciencies.lineID < timestamps.lineID
+  Ref: averageStationTimes.lineID < timestamps.lineID
 
+  Ref: averageStationTimes.endTSID < timestamps.timestampID
+  Ref: averageStationTimes.startTSID < timestamps.timestampID 
+
+  Ref: lineEffeciencies.endTSID < timestamps.timestampID
+  Ref: lineEffeciencies.startTSID < timestamps.timestampID
 
 view diagram: https://dbdiagram.io/d
 view db: https://sqlitebrowser.org/
