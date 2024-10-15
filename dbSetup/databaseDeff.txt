@@ -1,0 +1,41 @@
+Table timestamps {
+  lineID integer
+  stationID integer
+  state integer
+  timeOfEvent timestamp 
+}
+
+Table averageStationTimes {
+  lineID integer
+  stationID integer
+  averageTimeSec real
+  updatedAt timestamp
+  updateCount integer
+}
+
+Table lineEffeciencies {
+  lineID integer
+  lineEffeciency real
+  updatedAt timestamp 
+}
+
+Table lineNames {
+  lineID integer
+  lineName text
+}
+
+Table stationNames {
+  stationID integer
+  stationName text
+}
+
+
+Ref: lineNames.lineID < timestamps.lineID
+Ref: stationNames.stationID < timestamps.stationID
+
+Ref: lineEffeciencies.lineID < timestamps.lineID
+Ref: averageStationTimes.lineID < timestamps.lineID
+
+
+view diagram: https://dbdiagram.io/d
+view db: https://sqlitebrowser.org/

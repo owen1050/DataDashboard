@@ -2,7 +2,7 @@ from flask import Flask
 from flask import request
 from flask import send_file
 from threading import Thread
-from WillCode import RandDataGen
+from RandomNumGenerator import RandDataGen
 
 import json, time, requests
 
