@@ -3,7 +3,7 @@ import serial
 from collections import OrderedDict
 from databaseQuerys import databaseQuerys
 
-ser = serial.Serial('COM5', 115200)  # COM 4 is right USB C port
+ser = serial.Serial('COM4', 115200)  # COM 4 is right USB C port
 
 timeStamps = {}
 db = databaseQuerys()
