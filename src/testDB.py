@@ -2,4 +2,4 @@ from databaseQuerys import databaseQuerys
 
 
 db = databaseQuerys()
-db.updateAllStationAverageTime()
+print(db.calcAvgTimeForAllStations())
