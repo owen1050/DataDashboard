@@ -1,3 +1,6 @@
+-server 
+	-update js to take new format of times
+
 -dbQueries
 
 	- update average station time since last TSID

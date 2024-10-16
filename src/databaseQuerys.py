@@ -67,44 +67,44 @@ class databaseQuerys:
 		#calc avg time
 
 		cur = self.con.cursor()
-		try:
-			allStamps = cur.execute(f"select lineID, stationID, state, timeOfEvent from timestamps WHERE lineID = '{lineID}' and stationID = '{stationID}' order by timeOfEvent")
-			allStampsReq = allStamps.fetchall()
-			self.con.commit()
 
-			data = []
-			for timestamp in allStampsReq:
-				state = timestamp[2]
-				time = parse(timestamp[3])
-				data.append([state, time])
+		allStamps = cur.execute(f"select lineID, stationID, state, timeOfEvent from timestamps WHERE lineID = '{lineID}' and stationID = '{stationID}' order by timeOfEvent")
+		allStampsReq = allStamps.fetchall()
+		self.con.commit()
 
-			timeDeltas = []
-			prevState = 0
-			prevTime = 0
-			seen0 = False
-			for d in data:
-				if(seen0 == False and d[0] == 0):
-					seen0 = True
-					prevTime = d[1]
-				else:
+		data = []
+		for timestamp in allStampsReq:
+			state = timestamp[2]
+			time = parse(timestamp[3])
+			data.append([state, time])
+
+		timeDeltas = []
+		prevState = 0
+		prevTime = 0
+		seen0 = False
+		for d in data:
+			if(seen0 == False and d[0] == 0):
+				seen0 = True
+				prevTime = d[1]
+			else:
+				if(seen0 == True):
 					if(prevState == 0 and d[0] == 1):
+
 						td = d[1] - prevTime
 						timeDeltas.append(td)
 						prevState = 0
 					else:
 						prevTime = d[1]
 						prevState = 0
-			totalTime = timedelta(seconds = 0)
-			for td in timeDeltas:
-				totalTime = totalTime + td
+		totalTime = timedelta(seconds = 0)
+		for td in timeDeltas:
+			totalTime = totalTime + td
 
-			avgTime = totalTime/len(timeDeltas)
+		avgTime = (totalTime/len(timeDeltas)).total_seconds()
 
-	
 
-			return avgTime
-		except Exception as e:
-			print("error in calcAvgTimeForStation", e)
-			return -1
+
+		return avgTime
+
 	
 	

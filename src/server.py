@@ -3,7 +3,9 @@ from flask import request
 from flask import send_file
 from threading import Thread
 from RandomNumGenerator import RandDataGen
+from databaseQuerys import databaseQuerys
 
+db = databaseQuerys()
 import json, time, requests
 
 
@@ -20,7 +22,7 @@ def upCheck():
 
 @app.route('/api/getAverageTimes')
 def getAverageTimes():
-	return (json.dumps(randData.average_time))
+	return (json.dumps(db.calcAvgTimeForAllStations()))
 
 @app.route('/api/getEfficiency')
 def getEfficiency():

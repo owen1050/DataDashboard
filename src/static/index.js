@@ -11,9 +11,11 @@ function onPageLoad(){
     var partCounts = getPartCounts()
     maxS = 2;
     dataTable.insertRow(0)
+
     for(let l = 1;l <= 1000;l++){
         let thisLineEff = efficiencys[l]
         let thisLineTimes = avgTimes[l]
+        console.log(thisLineTimes)
         if(thisLineEff != undefined){
             //create a new row in table
             newRow = dataTable.insertRow(dataTable.rows.length);
@@ -29,7 +31,7 @@ function onPageLoad(){
                     break;
                 }
                 try{
-                    newRow.insertCell(s+2).innerHTML = thisStationTime[0].toFixed(2)
+                    newRow.insertCell(s+2).innerHTML = thisStationTime.toFixed(2)
                 } catch(err){
                     newRow.cells[s+1].innerHTML = 0
                 }
