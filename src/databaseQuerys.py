@@ -26,7 +26,29 @@ class databaseQuerys:
 		except Exception as e:
 			print("error in addTimestampEvent", e)
 			return -1
-		
+
+	def updateAllStationAverageTime(self):
+
+		cur = self.con.cursor()
+		try:
+			res = cur.execute("select DISTINCT lineID from timestamps ORDER BY lineID")
+			ret = res.fetchall()
+			lineNums = {}
+			for r in ret:
+				res = cur.execute("select DISTINCT lineID from timestamps ORDER BY lineID")
+				ret = res.fetchall()
+				lineNums.append(r[0])
+			print(lineNums)
+
+			#s = f"INSERT INTO timestamps VALUES ({maxID + 1}, '{lineID}', '{stationID}', {state},'{datetime.now()}')"
+			#res = cur.execute(s)
+
+			self.con.commit()
+
+			return 0
+		except Exception as e:
+			print("error in updateAllStationAverageTime", e)
+			return -1
 
 	
 	
