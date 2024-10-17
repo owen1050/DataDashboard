@@ -3,41 +3,40 @@ var avgTimes = getAverageTimes()
 var efficiencys = getEfficiency()
 
 onPageLoad()
-setInterval(onPageLoad, 1000);
+//setInterval(onPageLoad, 1000);
 
 function onPageLoad(){
     var dataTable = document.createElement('table');
-    refreshRandomData()
-    var partCounts = getPartCounts()
     maxS = 2;
     dataTable.insertRow(0)
 
-    for(let l = 1;l <= 1000;l++){
-        let thisLineEff = efficiencys[l]
+    for(let l = 1;l <= 100;l++){
         let thisLineTimes = avgTimes[l]
         console.log(thisLineTimes)
-        if(thisLineEff != undefined){
+        if(thisLineTimes != undefined){
             //create a new row in table
             newRow = dataTable.insertRow(dataTable.rows.length);
             newRow.insertCell(0).innerHTML = l
-            newRow.insertCell(1).innerHTML = thisLineEff.toFixed(2)
-            newRow.insertCell(2).innerHTML = partCounts[l]
+
+            numStation =  Object.keys(avgTimes[l]).length
+            console.log(numStation)
             //loop through stations
             //populate row in this section
-            for(let s = 1;s!=-1;s++){
+            goodCount = 0
+            for(let s = 1;s<50 && goodCount<numStation;s++){
                 let thisStationTime = avgTimes[l][s]
+                //console.log(l, s, thisStationTime  )
                 //this only works if stations are sequential without breaks
-                if(thisStationTime == undefined){
-                    break;
-                }
-                try{
-                    newRow.insertCell(s+2).innerHTML = thisStationTime.toFixed(2)
-                } catch(err){
-                    newRow.cells[s+1].innerHTML = 0
-                }
-                if(s + 2 > maxS){
-                    maxS = s + 2
-                }
+                if(thisStationTime != undefined){
+                    goodCount = goodCount + 1
+                    newRow.insertCell(s).innerHTML = thisStationTime.toFixed(2)
+                    if(s > maxS){
+                        maxS = s
+                    }
+                } else {
+                    newRow.insertCell(s).innerHTML = ''
+              }
+                
             }
             //write row to table here
         }
@@ -48,15 +47,9 @@ function onPageLoad(){
         if(newS == 0){
             let newCell = firstRow.insertCell(0)
             newCell.innerHTML = "Line"
-        } else if(newS == 1){
-            let newCell = firstRow.insertCell(1)
-            newCell.innerHTML = "Efficiency (%)"
-        }else if(newS == 2){
-            let newCell = firstRow.insertCell(2)
-            newCell.innerHTML = "Part Count (#)"
         }else{
             let newCell = firstRow.insertCell(newS)
-            newCell.innerHTML = "Station " + Number(newS-2).toString() + " (s)"
+            newCell.innerHTML = "Station " + Number(newS).toString()
         }
     }
 
