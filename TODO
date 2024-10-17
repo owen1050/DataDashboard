@@ -1,10 +1,20 @@
--server 
-	-update js to take new format of times
+-site 
+3	- effeciency and part count in table all time
+8	- in table part count goal as an input
+9	- graph of average time over time 
+		- dropdown of lines
+		- each station gets a graph
+		- show line effeciency over time
+10	- settings page for line part goals
 
 -dbQueries
+1	- all time effeciency db
+2	- all time part count db
+4	- avg time in set intervals of time (every day?)
+5	- eff in set intervals of time (every day?)
+6	- part count in set intervals of time (every day?)
+11	- edit line name
+12	- edit station name
 
-	- update average station time since last TSID
-	- update line effeciency since last TSID
-	- given start time, end time, time spacing, generate average station times and average line effeciencies
-	- edit line name
-	- edit station name
+long time:
+7	- db store part goals
