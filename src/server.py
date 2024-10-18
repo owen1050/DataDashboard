@@ -8,7 +8,6 @@ from databaseQuerys import databaseQuerys
 db = databaseQuerys()
 import json, time, requests
 
-
 app = Flask(__name__, static_folder='static', static_url_path='')
 randData = RandDataGen()
 
@@ -22,20 +21,17 @@ def upCheck():
 
 @app.route('/api/getAverageTimes')
 def getAverageTimes():
-	return (json.dumps(db.calcAvgTimeForAllStations()))
+	t = db.calcAvgTimeForAllStations()
+	return (json.dumps(t))
 
 @app.route('/api/getEfficiency')
 def getEfficiency():
-	return (json.dumps(randData.line_balancing_efficiency))
+	return (json.dumps(db.getAllLineEffeciencies()))
+
 
 @app.route('/api/getPartCounts')
 def getPartCounts():
-	return (json.dumps(randData.partCounts))
-
-@app.route('/api/regenData')
-def regenData():
-	randData.genRandData()
-	return str(1)
+	return (json.dumps(db.calcPartCount()))
 
 if __name__ == '__main__':
 	randData.genRandData(10000)

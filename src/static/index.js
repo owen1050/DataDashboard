@@ -1,6 +1,7 @@
 var oldDataTable = document.getElementById("dataTable")
 var avgTimes = getAverageTimes()
 var efficiencys = getEfficiency()
+var partCounts = getPartCounts()
 
 onPageLoad()
 //setInterval(onPageLoad, 1000);
@@ -17,6 +18,8 @@ function onPageLoad(){
             //create a new row in table
             newRow = dataTable.insertRow(dataTable.rows.length);
             newRow.insertCell(0).innerHTML = l
+            newRow.insertCell(1).innerHTML = efficiencys[l].toFixed(2) + "%"
+            newRow.insertCell(2).innerHTML = partCounts[l].toFixed(0)
 
             numStation =  Object.keys(avgTimes[l]).length
             console.log(numStation)
@@ -29,12 +32,12 @@ function onPageLoad(){
                 //this only works if stations are sequential without breaks
                 if(thisStationTime != undefined){
                     goodCount = goodCount + 1
-                    newRow.insertCell(s).innerHTML = thisStationTime.toFixed(2)
+                    newRow.insertCell(s+2).innerHTML = thisStationTime.toFixed(2)
                     if(s > maxS){
                         maxS = s
                     }
                 } else {
-                    newRow.insertCell(s).innerHTML = ''
+                    newRow.insertCell(s+2).innerHTML = ''
               }
                 
             }
@@ -43,13 +46,21 @@ function onPageLoad(){
         
     }
     firstRow = dataTable.rows[0]
-    for(let newS = 0; newS <= maxS; newS++){
+    for(let newS = 0; newS <= maxS+2; newS++){
         if(newS == 0){
             let newCell = firstRow.insertCell(0)
             newCell.innerHTML = "Line"
-        }else{
-            let newCell = firstRow.insertCell(newS)
-            newCell.innerHTML = "Station " + Number(newS).toString()
+        }
+        else{ if(newS == 1){
+            let newCell = firstRow.insertCell(1)
+            newCell.innerHTML = "Efficiency"
+            }else if(newS == 2){
+                let newCell = firstRow.insertCell(2)
+                newCell.innerHTML = "Part Count"
+            }else{
+                let newCell = firstRow.insertCell(newS)
+                newCell.innerHTML = "Station " + Number(newS-2).toString()
+            }
         }
     }
 

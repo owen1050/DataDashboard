@@ -62,6 +62,52 @@ class databaseQuerys:
 
 		return avgTimes
 
+	def calcPartCount(self):
+		stations = self.getAllStations()
+		partCounts = {}
+		for line in stations:
+			minPartCount = 999999
+			for station in stations[line]:
+				pc = self.calcPartCountForStation(line, station)
+				if(pc < minPartCount):
+					minPartCount = pc
+			partCounts[line] = minPartCount
+
+		return partCounts
+
+	def calcPartCountForStation(self, lineID, stationID):
+		cur = self.con.cursor()
+
+		allStamps = cur.execute(f"select lineID, stationID, state, timeOfEvent from timestamps WHERE lineID = '{lineID}' and stationID = '{stationID}' order by timeOfEvent")
+		allStampsReq = allStamps.fetchall()
+		self.con.commit()
+
+		data = []
+		for timestamp in allStampsReq:
+			state = timestamp[2]
+			time = parse(timestamp[3])
+			data.append([state, time])
+
+		timeDeltas = []
+		prevState = 0
+		prevTime = 0
+		seen0 = False
+		for d in data:
+			if(seen0 == False and d[0] == 0):
+				seen0 = True
+				prevTime = d[1]
+			else:
+				if(seen0 == True):
+					if(prevState == 0 and d[0] == 1):
+
+						td = d[1] - prevTime
+						timeDeltas.append(td)
+						prevState = 0
+					else:
+						prevTime = d[1]
+						prevState = 0
+		return len(timeDeltas)
+
 	def calcAvgTimeForStation(self, lineID, stationID):
 		#get all line/station timesttatmps
 		#calc avg time
@@ -96,15 +142,33 @@ class databaseQuerys:
 					else:
 						prevTime = d[1]
 						prevState = 0
+
+
 		totalTime = timedelta(seconds = 0)
 		for td in timeDeltas:
 			totalTime = totalTime + td
 
 		avgTime = (totalTime/len(timeDeltas)).total_seconds()
-
-
-
 		return avgTime
 
+	def getAllLineEffeciencies(self):
+		avgTimes = self.calcAvgTimeForAllStations()
+		effecienceis = {}
+
+		for line in avgTimes:
+			minT = 999999999
+			maxT = 0
+			#print(line, avgTimes[line])
+			for station in avgTimes[line]:
+				time = avgTimes[line][station]
+				if(time > maxT):
+					maxT = time
+
+				if(time < minT):
+					minT = time
+
+			effecienceis[line] = 100*minT/maxT
+		return effecienceis
+			
 	
 	
