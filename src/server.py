@@ -15,6 +15,10 @@ randData = RandDataGen()
 def main():
 	return app.send_static_file('main.html')
 
+@app.route('/graphpage')
+def graphPage():
+	return app.send_static_file('graphPage.html')
+
 @app.route('/api/upcheck')
 def upCheck():
 	return str(1)
