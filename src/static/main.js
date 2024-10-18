@@ -17,7 +17,7 @@ function onPageLoad(){
         if(thisLineTimes != undefined){
             //create a new row in table
             newRow = dataTable.insertRow(dataTable.rows.length);
-            newRow.insertCell(0).innerHTML = l
+            newRow.insertCell(0).innerHTML = "<a href=\"" + url_g + "/graphpage?line=" + l + "\">"+l.toString()+"</a>"
             newRow.insertCell(1).innerHTML = efficiencys[l].toFixed(2) + "%"
             newRow.insertCell(2).innerHTML = partCounts[l].toFixed(0)
 
