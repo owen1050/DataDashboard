@@ -118,6 +118,66 @@ class databaseQuerys:
 		allStampsReq = allStamps.fetchall()
 		self.con.commit()
 
+		return self.rawTimestampsToAverageTime(allStampsReq)
+
+		
+
+	def getAllLineEffeciencies(self):
+		avgTimes = self.calcAvgTimeForAllStations()
+		effecienceis = {}
+
+		for line in avgTimes:
+			minT = 999999999
+			maxT = 0
+			#print(line, avgTimes[line])
+			for station in avgTimes[line]:
+				time = avgTimes[line][station]
+				if(time > maxT):
+					maxT = time
+
+				if(time < minT):
+					minT = time
+
+			effecienceis[line] = 100*minT/maxT
+		return effecienceis
+	
+	def getAverageTimeForStationInIntervals(self, lineID, stationID, intervalInSeconds, totalTime, startSecondsAgo):
+		now = datetime.now()
+		startTime = now - timedelta(seconds = (startSecondsAgo))
+		numTimeIntervals = int(totalTime/intervalInSeconds)
+		if(numTimeIntervals > 500):
+			return "Error: Too many datapoints"
+		else:
+			intervals = []
+			for iN in range(numTimeIntervals):
+				start = startTime + timedelta(seconds = intervalInSeconds * iN )
+				end =  startTime + timedelta(seconds = intervalInSeconds * (iN+1))
+				#print("start, end:", start, end)
+				intervals.append([start, end])
+		
+		cur = self.con.cursor()
+		ret = []
+		for interval in intervals:
+			r = f"select lineID, stationID, state, timeOfEvent from timestamps where timeOfEvent between '{interval[0]}' and '{interval[1]}' and lineID = '{lineID}' and stationID = '{stationID}' order by timeOfEvent"
+			allStamps = cur.execute(r)
+			allStampsReq = allStamps.fetchall()
+			self.con.commit()
+
+			ret.append([interval[0], self.rawTimestampsToAverageTime(allStampsReq)])
+
+		return ret
+	
+
+	def getAllStationsAvgOverTime(self, lineID, intervalInSeconds, totalTIme, startSecondsAgo):
+		stations = self.getAllStations()[lineID]
+		cycleTimeOverTimeByStation = {}
+		for station in stations:
+			times = self.getAverageTimeForStationInIntervals(lineID, station, intervalInSeconds, totalTIme, startSecondsAgo)
+			cycleTimeOverTimeByStation[station] = times
+
+		return cycleTimeOverTimeByStation
+
+	def rawTimestampsToAverageTime(self, allStampsReq):
 		data = []
 		for timestamp in allStampsReq:
 			state = timestamp[2]
@@ -153,44 +213,6 @@ class databaseQuerys:
 			return avgTime
 		except:
 			return 0
-
-	def getAllLineEffeciencies(self):
-		avgTimes = self.calcAvgTimeForAllStations()
-		effecienceis = {}
-
-		for line in avgTimes:
-			minT = 999999999
-			maxT = 0
-			#print(line, avgTimes[line])
-			for station in avgTimes[line]:
-				time = avgTimes[line][station]
-				if(time > maxT):
-					maxT = time
-
-				if(time < minT):
-					minT = time
-
-			effecienceis[line] = 100*minT/maxT
-		return effecienceis
-	
-	def getAverageTimeForStationInIntervals(self, line, station, intervalInSeconds, lookbackSeconds):
-		now = datetime.now()
-		earliest = now - timedelta(seconds = lookbackSeconds)
-		numTimeIntervals = int(lookbackSeconds/intervalInSeconds)
-		print("Now:", now)
-		if(numTimeIntervals > 500):
-			return "Error: Too many datapoints"
-		else:
-			intervals = []
-			for iN in range(numTimeIntervals):
-				end = now - timedelta(seconds = intervalInSeconds * iN)
-				start =  now - timedelta(seconds = intervalInSeconds * iN+1)
-				print("end, start:", end, start)
-				intervals.append([start, end])
-
-
-			return intervals
-	
 		
-	
+
 	
