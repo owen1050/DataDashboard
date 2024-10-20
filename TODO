@@ -3,7 +3,7 @@ Main
 Graph
 80	- edit part count goal
 90	- graph
-		- each station gets a graph
+		- dropdown for each station
 		- show line effeciency over time
 
 dbQueries
@@ -15,4 +15,3 @@ dbQueries
 
 
 long time:
-00 - generate random data
