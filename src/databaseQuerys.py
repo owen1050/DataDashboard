@@ -147,9 +147,12 @@ class databaseQuerys:
 		totalTime = timedelta(seconds = 0)
 		for td in timeDeltas:
 			totalTime = totalTime + td
-
-		avgTime = (totalTime/len(timeDeltas)).total_seconds()
-		return avgTime
+		
+		try:
+			avgTime = (totalTime/len(timeDeltas)).total_seconds()
+			return avgTime
+		except:
+			return 0
 
 	def getAllLineEffeciencies(self):
 		avgTimes = self.calcAvgTimeForAllStations()
@@ -169,6 +172,25 @@ class databaseQuerys:
 
 			effecienceis[line] = 100*minT/maxT
 		return effecienceis
-			
+	
+	def getAverageTimeForStationInIntervals(self, line, station, intervalInSeconds, lookbackSeconds):
+		now = datetime.now()
+		earliest = now - timedelta(seconds = lookbackSeconds)
+		numTimeIntervals = int(lookbackSeconds/intervalInSeconds)
+		print("Now:", now)
+		if(numTimeIntervals > 500):
+			return "Error: Too many datapoints"
+		else:
+			intervals = []
+			for iN in range(numTimeIntervals):
+				end = now - timedelta(seconds = intervalInSeconds * iN)
+				start =  now - timedelta(seconds = intervalInSeconds * iN+1)
+				print("end, start:", end, start)
+				intervals.append([start, end])
+
+
+			return intervals
+	
+		
 	
 	
