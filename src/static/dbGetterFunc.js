@@ -35,9 +35,17 @@ function refreshDBData(){
     return ret
 }
 
-function refreshRandomData(){
-    refreshDBData()
-    avgTimes = getAverageTimes()
-    efficiencys = getEfficiency()
+function getAllStationsAvgOverTime(ineID, intervalInSeconds, totalTIme, startSecondsAgo ){
 
+    //?username=alex&password=pw1 
+
+    const xhr = new XMLHttpRequest();
+    let fullUrl = url_g + "/api/getAllStationsAvgOverTime?lineID=" + lineID + "&intervalInSeconds=" + intervalInSeconds  + "&totalTIme=" + totalTIme  + "&startSecondsAgo=" + startSecondsAgo
+    //console.log(fullUrl)
+    xhr.open("GET", fullUrl, false);
+    xhr.send();
+    const data = xhr.response;
+    //console.log(data);
+    ret = JSON.parse(data);
+    return ret
 }

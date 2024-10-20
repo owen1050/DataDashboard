@@ -37,6 +37,16 @@ def getEfficiency():
 def getPartCounts():
 	return (json.dumps(db.calcPartCount()))
 
+@app.route('/api/getAllStationsAvgOverTime')
+def getAllStationsAvgOverTime():
+	lineID = int(request.args.get('lineID'))
+	intervalInSeconds = int(request.args.get('intervalInSeconds'))
+	totalTIme = int(request.args.get('totalTIme'))
+	startSecondsAgo = int(request.args.get('startSecondsAgo'))
+	#print("server.pygetAllStationsAvgOverTime:", lineID, intervalInSeconds, totalTIme, startSecondsAgo)
+
+	return (json.dumps(db.getAllStationsAvgOverTime(lineID, intervalInSeconds, totalTIme, startSecondsAgo)))
+
 if __name__ == '__main__':
 	randData.genRandData(10000)
 	app.run(host="0.0.0.0", port=5000)

@@ -163,7 +163,7 @@ class databaseQuerys:
 			allStampsReq = allStamps.fetchall()
 			self.con.commit()
 
-			ret.append([interval[0], self.rawTimestampsToAverageTime(allStampsReq)])
+			ret.append([str(interval[0]), self.rawTimestampsToAverageTime(allStampsReq)])
 
 		return ret
 	
