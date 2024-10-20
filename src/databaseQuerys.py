@@ -27,6 +27,23 @@ class databaseQuerys:
 		except Exception as e:
 			print("error in addTimestampEvent", e)
 			return -1
+		
+	def addTimestampEventAT(self, lineID, stationID,  state, time):
+		cur = self.con.cursor()
+		try:
+			res = cur.execute("select max(ROWID) as greatestID from timestamps")
+			ret = res.fetchone()
+			maxID = int(ret[0])
+
+			s = f"INSERT INTO timestamps VALUES ({maxID + 1}, '{lineID}', '{stationID}', {state},'{time}')"
+			res = cur.execute(s)
+
+			self.con.commit()
+
+			return 0
+		except Exception as e:
+			print("error in addTimestampEvent", e)
+			return -1
 
 	def getAllStations(self):
 

@@ -1,15 +1,11 @@
 from flask import Flask
 from flask import request
-from flask import send_file
-from threading import Thread
-from RandomNumGenerator import RandDataGen
 from databaseQuerys import databaseQuerys
+import json
 
 db = databaseQuerys()
-import json, time, requests
 
 app = Flask(__name__, static_folder='static', static_url_path='')
-randData = RandDataGen()
 
 @app.route('/')
 def main():
