@@ -10,9 +10,9 @@ dbQueries
 20	- edit line name
 10	- edit station name
 30	- db store part goals
-40	- avg time in set intervals of time (every day?)
 50	- eff in set intervals of time (every day?)
 60	- part count in set intervals of time (every day?)
 
 
 long time:
+00 - generate random data
