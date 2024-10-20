@@ -44,5 +44,4 @@ def getAllStationsAvgOverTime():
 	return (json.dumps(db.getAllStationsAvgOverTime(lineID, intervalInSeconds, totalTIme, startSecondsAgo)))
 
 if __name__ == '__main__':
-	randData.genRandData(10000)
 	app.run(host="0.0.0.0", port=5000)
