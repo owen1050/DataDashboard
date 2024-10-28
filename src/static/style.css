@@ -12,11 +12,23 @@ table {
 
 td, th {
   font-family: arial, sans-serif;
-  border: 1px solid #444444;
+  border: 2px solid #bbbbbb;
   text-align: center;
   padding: 3px;
 }
 
 tr:nth-child(even) {
-  background-color: #dddddd;
+  background-color: #333333;
+}
+
+body { background: #333; color: white; } 
+
+/* unvisited link */
+a:link {
+  color: white;
+}
+
+/* visited link */
+a:visited {
+  color: #bbbbbb;
 }

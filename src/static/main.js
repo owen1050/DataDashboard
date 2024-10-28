@@ -22,7 +22,7 @@ function onPageLoad(){
             newRow.insertCell(2).innerHTML = partCounts[l].toFixed(0)
 
             numStation =  Object.keys(avgTimes[l]).length
-            console.log(numStation)
+            
             //loop through stations
             //populate row in this section
             goodCount = 0
