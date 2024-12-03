@@ -155,7 +155,7 @@ class databaseQuerys:
 				if(time < minT):
 					minT = time
 
-			effecienceis[line] = 100*minT/maxT
+			effecienceis[line] = 100*minT/(maxT+0.000001)
 		return effecienceis
 	
 	def getAverageTimeForStationInIntervals(self, lineID, stationID, intervalInSeconds, totalTime, startSecondsAgo):

@@ -35,7 +35,7 @@ function refreshDBData(){
     return ret
 }
 
-function getAllStationsAvgOverTime(ineID, intervalInSeconds, totalTIme, startSecondsAgo ){
+function getAllStationsAvgOverTime(lineID, intervalInSeconds, totalTIme, startSecondsAgo ){
 
     //?username=alex&password=pw1 
 

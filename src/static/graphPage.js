@@ -14,7 +14,7 @@ function setupDemoData(){
 
   let realData = getAllStationsAvgOverTime(lineID, 5,200,200)
 
-  let oneStation = realData[2]
+  let oneStation = realData[1]
   console.log(oneStation)
   timesForX = []
   avgTimeOnY = []
