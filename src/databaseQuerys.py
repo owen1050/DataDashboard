@@ -195,6 +195,12 @@ class databaseQuerys:
 
 		return cycleTimeOverTimeByStation
 
+	def getAllStationsAvgOverTimeStartHardcoded(self, lineID, intervalInSeconds, totalTIme, startEpoch):
+		now = datetime.now()
+		start = datetime.fromtimestamp(startEpoch)
+		return self.getAllStationsAvgOverTime(lineID, intervalInSeconds, totalTIme, (now-start).total_seconds())
+
+
 	def rawTimestampsToAverageTime(self, allStampsReq):
 		#print(allStampsReq)
 		data = []

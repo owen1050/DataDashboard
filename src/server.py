@@ -43,5 +43,15 @@ def getAllStationsAvgOverTime():
 
 	return (json.dumps(db.getAllStationsAvgOverTime(lineID, intervalInSeconds, totalTIme, startSecondsAgo)))
 
+@app.route('/api/getAllStationsAvgOverTimeStartEpoch')
+def getAllStationsAvgOverTimeStartEpoch():
+	lineID = int(request.args.get('lineID'))
+	intervalInSeconds = int(request.args.get('intervalInSeconds'))
+	totalTIme = int(request.args.get('totalTIme'))
+	startSecondsAgo = int(request.args.get('startSecondsAgo'))
+	#print("server.pygetAllStationsAvgOverTime:", lineID, intervalInSeconds, totalTIme, startSecondsAgo)
+
+	return (json.dumps(db.getAllStationsAvgOverTimeStartHardcoded(lineID, intervalInSeconds, totalTIme, startSecondsAgo)))
+
 if __name__ == '__main__':
 	app.run(host="0.0.0.0", port=5000)

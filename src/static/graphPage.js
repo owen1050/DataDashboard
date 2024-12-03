@@ -12,7 +12,7 @@ function updateGraph(){
 
 function setupDemoData(){
 
-  let realData = getAllStationsAvgOverTime(lineID, 5,200,200)
+  let realData = getAllStationsAvgOverTime(lineID, 75,800,1731613705)
 
   let oneStation = realData[1]
   console.log(oneStation)

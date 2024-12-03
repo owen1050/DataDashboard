@@ -40,7 +40,7 @@ function getAllStationsAvgOverTime(lineID, intervalInSeconds, totalTIme, startSe
     //?username=alex&password=pw1 
 
     const xhr = new XMLHttpRequest();
-    let fullUrl = url_g + "/api/getAllStationsAvgOverTime?lineID=" + lineID + "&intervalInSeconds=" + intervalInSeconds  + "&totalTIme=" + totalTIme  + "&startSecondsAgo=" + startSecondsAgo
+    let fullUrl = url_g + "/api/getAllStationsAvgOverTimeStartEpoch?lineID=" + lineID + "&intervalInSeconds=" + intervalInSeconds  + "&totalTIme=" + totalTIme  + "&startSecondsAgo=" + startSecondsAgo
     //console.log(fullUrl)
     xhr.open("GET", fullUrl, false);
     xhr.send();
