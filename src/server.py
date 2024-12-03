@@ -15,6 +15,10 @@ def main():
 def graphPage():
 	return app.send_static_file('graphPage.html')
 
+@app.route('/videopage')
+def videoPage():
+	return app.send_static_file('video.html')
+
 @app.route('/api/upcheck')
 def upCheck():
 	return str(1)
