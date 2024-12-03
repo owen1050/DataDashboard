@@ -175,9 +175,10 @@ class databaseQuerys:
 		cur = self.con.cursor()
 		ret = []
 		for interval in intervals:
-			r = f"select lineID, stationID, state, timeOfEvent from timestamps where timeOfEvent between '{interval[0]}' and '{interval[1]}' and lineID = '{lineID}' and stationID = '{stationID}' order by timeOfEvent"
+			r = f"select lineID, stationID, state, timeOfEvent from timestamps where timeOfEvent between '{interval[0]}' and '{interval[1]}' and lineID = '{lineID}' and stationID = '{stationID}' and state = 1 order by timeOfEvent"
 			allStamps = cur.execute(r)
 			allStampsReq = allStamps.fetchall()
+
 			self.con.commit()
 
 			ret.append([str(interval[0]), self.rawTimestampsToAverageTime(allStampsReq)])
@@ -195,35 +196,30 @@ class databaseQuerys:
 		return cycleTimeOverTimeByStation
 
 	def rawTimestampsToAverageTime(self, allStampsReq):
+		#print(allStampsReq)
 		data = []
 		for timestamp in allStampsReq:
 			state = timestamp[2]
 			time = parse(timestamp[3])
-			data.append([state, time])
-
+			if(state == 1):
+				data.append([state, time])
+		print(data)
 		timeDeltas = []
 		prevState = 0
 		prevTime = 0
-		seen0 = False
+		first = True
+		totalTime = timedelta(seconds = 0)
 		for d in data:
-			if(seen0 == False and d[0] == 0):
-				seen0 = True
+			if(first):
+				first = False
 				prevTime = d[1]
 			else:
-				if(seen0 == True):
-					if(prevState == 0 and d[0] == 1):
+				td = d[1] - prevTime
+				prevTime = d[1]
+				if(td.total_seconds() < 60*60*8):
+					timeDeltas.append(td)
+					totalTime = totalTime + td
 
-						td = d[1] - prevTime
-						timeDeltas.append(td)
-						prevState = 0
-					else:
-						prevTime = d[1]
-						prevState = 0
-
-
-		totalTime = timedelta(seconds = 0)
-		for td in timeDeltas:
-			totalTime = totalTime + td
 		
 		try:
 			avgTime = (totalTime/len(timeDeltas)).total_seconds()
